@@ -1,22 +1,9 @@
-/**
- * Creates a node for the search algorithm. Each node represents a square on the board.
- * @param {Array<number>} position - The [x, y] coordinates of the square.
- * @param {object | null} parent - The node that led to this one, used for path reconstruction.
- * @returns {object} A move node object.
- */
 function createMoveNode(position, parent = null) {
   return {
     position,
     parent,
   };
 }
-
-/**
- * Calculates all 8 possible knight moves from a given position and filters out
- * any moves that would go off the 8x8 chessboard.
- * @param {Array<number>} position - The starting [x, y] coordinates.
- * @returns {Array<Array<number>>} An array of valid move coordinates.
- */
 function getValidMoves(position) {
   const [x, y] = position;
   // All 8 potential "L-shaped" moves a knight can make.
@@ -37,14 +24,6 @@ function getValidMoves(position) {
     return mx >= 0 && mx < 8 && my >= 0 && my < 8;
   });
 }
-
-/**
- * Finds the shortest path for a knight between two squares on a chessboard
- * using a Breadth-First Search (BFS) algorithm.
- * @param {Array<number>} startingPosition - The starting [x, y] coordinates.
- * @param {Array<number>} endingPosition - The target [x, y] coordinates.
- * @returns {Array<Array<number>> | undefined} The shortest path as an array of coordinates, or undefined if no path exists.
- */
 function knightMoves(startingPosition, endingPosition) {
   // A queue to manage the squares to visit next (FIFO for BFS).
   let queue = [];
@@ -82,7 +61,7 @@ function knightMoves(startingPosition, endingPosition) {
       if (!visited.has(moveString)) {
         // ...mark it as visited...
         visited.add(moveString);
-        // ...create a new node for it...
+        // ...create a new node for it, linking to the current node as its parent...
         const newMove = createMoveNode(move, currentNode);
         // ...and add it to the queue to be explored later.
         queue.push(newMove);
@@ -90,6 +69,5 @@ function knightMoves(startingPosition, endingPosition) {
     }
   }
 }
-
 // Example: Find the shortest path from the top-left corner [0, 0] to the bottom-right corner [7, 7].
 knightMoves([0, 0], [7, 7]);
