@@ -25,11 +25,8 @@ function getValidMoves(position) {
   });
 }
 function knightMoves(startingPosition, endingPosition) {
-  // A queue to manage the squares to visit next (FIFO for BFS).
   let queue = [];
-  // Add the starting square to the queue.
   queue.push(createMoveNode(startingPosition));
-  // A set to keep track of visited squares to prevent infinite loops and redundant work.
   const visited = new Set();
   visited.add(startingPosition.toString());
 
@@ -57,13 +54,9 @@ function knightMoves(startingPosition, endingPosition) {
     const moves = getValidMoves(currentNode.position);
     for (let move of moves) {
       const moveString = move.toString();
-      // If the move has not been visited yet...
       if (!visited.has(moveString)) {
-        // ...mark it as visited...
         visited.add(moveString);
-        // ...create a new node for it, linking to the current node as its parent...
         const newMove = createMoveNode(move, currentNode);
-        // ...and add it to the queue to be explored later.
         queue.push(newMove);
       }
     }
